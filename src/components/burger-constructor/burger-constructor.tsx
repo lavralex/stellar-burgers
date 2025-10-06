@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from '../../services/store';
-import { FC, useMemo } from 'react';
-import { TConstructorIngredient } from '@utils-types';
+import React, { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
 import {
   createOrder,
