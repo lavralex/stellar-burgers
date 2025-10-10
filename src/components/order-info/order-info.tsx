@@ -1,23 +1,29 @@
-import { FC, useMemo } from 'react';
+import React, { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from '../../services/store';
+import { getOrderByNumber } from '../../services/slices/profile-orders-slice';
+import { getIngredients } from '../../services/slices/ingredients-slice';
+import styles from '../../components/app/app.module.css';
 
-export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+export const OrderInfo: FC<{ inModal?: boolean }> = ({ inModal = false }) => {
+  const dispatch = useDispatch();
+  const { number } = useParams<{ number: string }>();
+  const ingredients = useSelector((state) => state.ingredients.items);
+  const orderData = useSelector((state) => state.profileOrders.orderByNumber);
+  const isLoading = useSelector((state) => state.profileOrders.isLoading);
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    if (number) {
+      dispatch(getOrderByNumber(Number(number)));
+    }
+    if (ingredients.length === 0) {
+      dispatch(getIngredients());
+    }
+  }, [dispatch, number, ingredients.length]);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -40,7 +46,6 @@ export const OrderInfo: FC = () => {
         } else {
           acc[item].count++;
         }
-
         return acc;
       },
       {}
@@ -59,9 +64,24 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (isLoading) {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  if (!orderInfo) {
+    return <div>Заказ не найден</div>;
+  }
+
+  return (
+    <div className={styles.detailPageWrap}>
+      {!inModal && (
+        <div className={styles.detailHeader}>
+          <h1 className='text text_type_digits-default'>
+            #{String(orderInfo.number).padStart(6, '0')}
+          </h1>
+        </div>
+      )}
+      <OrderInfoUI orderInfo={orderInfo} />
+    </div>
+  );
 };
