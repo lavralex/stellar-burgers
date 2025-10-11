@@ -1,4 +1,4 @@
-import profileOrdersReducer, { fetchProfileOrders } from './index';
+import profileOrdersReducer, { fetchProfileOrders, initialState } from './index';
 import { TOrder } from '@utils-types';
 
 jest.mock('@api', () => ({
@@ -6,12 +6,6 @@ jest.mock('@api', () => ({
 }));
 
 describe('Слайс заказов профиля', () => {
-  const initialState = {
-    orders: [] as TOrder[],
-    orderByNumber: null as TOrder | null,
-    isLoading: false,
-    error: null as string | null
-  };
 
   it('должен возвращать начальное состояние', () => {
     expect(profileOrdersReducer(undefined, { type: '' })).toEqual(initialState);

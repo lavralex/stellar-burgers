@@ -4,15 +4,12 @@ import orderReducer, {
   addBun,
   removeAllIngredients,
   moveIngredientDown,
-  moveIngredientUp
+  moveIngredientUp,
+  initialState
 } from './index';
 import { TConstructorIngredient } from '@utils-types';
 
 describe('Слайс заказа', () => {
-  const initialState = {
-    buns: null as TConstructorIngredient | null,
-    ingredients: [] as TConstructorIngredient[]
-  };
 
   const mockBun: TConstructorIngredient = {
     _id: 'bun1',

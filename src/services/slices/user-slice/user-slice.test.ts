@@ -5,7 +5,8 @@ import userReducer, {
   updateUser,
   registerUser,
   checkUserAuth,
-  setAuthChecked
+  setAuthChecked,
+  initialState
 } from './index';
 
 jest.mock('@api', () => ({
@@ -23,12 +24,6 @@ jest.mock('../../../utils/cookie', () => ({
 }));
 
 describe('Слайс пользователя', () => {
-  const initialState = {
-    data: null as { email: string; name: string } | null,
-    isAuthChecked: false,
-    isLoading: false,
-    error: null as string | null
-  };
 
   const mockUser = {
     email: 'test@example.com',

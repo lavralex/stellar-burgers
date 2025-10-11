@@ -1,4 +1,4 @@
-import feedsReducer, { fetchFeeds } from './index';
+import feedsReducer, { fetchFeeds, initialState } from './index';
 import { TOrder } from '@utils-types';
 
 jest.mock('@api', () => ({
@@ -6,13 +6,6 @@ jest.mock('@api', () => ({
 }));
 
 describe('Слайс ленты заказов', () => {
-  const initialState = {
-    orders: [] as TOrder[],
-    total: 0,
-    totalToday: 0,
-    isLoading: false,
-    error: null as string | null
-  };
 
   it('должен возвращать начальное состояние', () => {
     expect(feedsReducer(undefined, { type: '' })).toEqual(initialState);

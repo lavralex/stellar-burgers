@@ -3,7 +3,8 @@ import reducer, {
   addIngredient,
   removeIngredient,
   moveIngredient,
-  clearConstructor
+  clearConstructor,
+  initialState
 } from './index';
 import { TConstructorIngredient } from '@utils-types';
 
@@ -35,11 +36,6 @@ const mockIngredient: TConstructorIngredient = {
   image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
   image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
   id: 'ingredient-1'
-};
-
-const initialState = {
-  bun: null,
-  ingredients: []
 };
 
 describe('[burgerConstructor] тесты слайса конструктора бургеров', () => {

@@ -1,4 +1,4 @@
-import createOrderReducer, { createOrder, clearOrder } from './index';
+import createOrderReducer, { createOrder, clearOrder, initialState } from './index';
 import { TOrder } from '@utils-types';
 
 jest.mock('@api', () => ({
@@ -6,11 +6,6 @@ jest.mock('@api', () => ({
 }));
 
 describe('Слайс создания заказа', () => {
-  const initialState = {
-    orderData: null as TOrder | null,
-    isLoading: false,
-    error: null as string | null
-  };
 
   it('должен возвращать начальное состояние', () => {
     expect(createOrderReducer(undefined, { type: '' })).toEqual(initialState);
